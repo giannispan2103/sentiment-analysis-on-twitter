@@ -162,7 +162,7 @@ class ProjectedTextRNN(Module):
                                                      out_size=proj_size, dropout=proj_mlp_dropout,
                                                      inner_activation=proj_mlp_activation, outer_activation=proj_mlp_activation)
 
-        self.cell = CellLayer(is_gru, self.embedding_layer.get_output_size(),
+        self.cell = CellLayer(is_gru, self.projection_layer.get_output_size(),
                               cell_hidden_size, bidirectional, stacked_layers)
         large_size = cell_hidden_size * 2 if bidirectional else cell_hidden_size
         self.decision_layer = MultiLayerPerceptron(num_of_layers=top_mlp_layers,
@@ -231,7 +231,7 @@ class ProjectedTextAuthorRNN(Module):
                                                      author_embeddings_output_size,
                                                      author_embeddings_dropout)
 
-        self.cell = CellLayer(is_gru, self.word_embedding_layer.get_output_size() + self.author_embedding_layer.get_output_size(),
+        self.cell = CellLayer(is_gru, self.projection_layer.get_output_size() + self.author_embedding_layer.get_output_size(),
                               cell_hidden_size, bidirectional, stacked_layers)
         large_size = cell_hidden_size * 2 if bidirectional else cell_hidden_size
         self.decision_layer = MultiLayerPerceptron(num_of_layers=top_mlp_layers,
@@ -417,7 +417,7 @@ class ProjectedAttentionTextRNN(Module):
                                                      out_size=proj_size, dropout=proj_mlp_dropout,
                                                      inner_activation=proj_mlp_activation, outer_activation=proj_mlp_activation)
 
-        self.cell = CellLayer(is_gru, self.word_embedding_layer.get_output_size(),
+        self.cell = CellLayer(is_gru, self.projection_layer.get_output_size(),
                               cell_hidden_size, bidirectional, stacked_layers)
         large_size = cell_hidden_size * 2 if bidirectional else cell_hidden_size
         self.decision_layer = MultiLayerPerceptron(num_of_layers=top_mlp_layers,
