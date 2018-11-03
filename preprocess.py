@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from tweet import Tweet
+from paths import TRAIN_PATH, EMBEDDINGS_PATH
 
 PAD_TOKEN = "*$*PAD*$*"
 UNK_TOKEN = "*$*UNK*$*"
@@ -44,7 +45,7 @@ def create_batches(tweets, w2i, a2i, pad_tnk=PAD_TOKEN, unk_tkn=UNK_TOKEN, unk_a
     return batches
 
 
-def get_embeddings(path='../input/embeddings/twitter/glove.twitter.27B.%dd.txt', size=50):
+def get_embeddings(path=EMBEDDINGS_PATH, size=50):
     """
     :param path: the directory where all glove twitter embeddings are stored.
     glove embeddings can be downloaded from https://nlp.stanford.edu/projects/glove/
@@ -239,7 +240,7 @@ def generate_data(split_point, emb_size, size=200000, min_freq=1, min_author_fre
     :param max_len: the padding size of text
     :return: train_posts, test_posts, w2i, emb_matrix, train_batches, test_batches
     """
-    df = load_data("../input/sentiment/training.1600000.processed.noemoticon.csv")
+    df = load_data(TRAIN_PATH)
     posts = get_posts(df, size=size)
     train_posts, test_posts = split_data(posts, split_point)
     print('tweets for training:', len(train_posts))
